@@ -1,2 +1,14 @@
 Hello this is for testing.
-Hi this side karamchand Minj
+Hi this side karamchand Minj.
+This is commited by VSC.
+
+//Local Machine
+1) Change
+2) Stage
+3) Commit
+
+//GitHub Repo of main project
+4) Push
+
+//Contributer Ka kaam 
+5) Pull
