@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+    <title>IOT Project</title>
+</head>
+
+<body>
+    <div class="container">
+        <header class="jumbotron">
+            <div class="container">
+                <h1>Smart Flood Detection System</h1>
+                <p>TO be added...</p>
+                <p><a class="btn btn-primary btn-lg" href="/adminLogin">Admin Login</a></p>
+                <ul>
+                    <% data["feeds"].forEach(function(feed){%>
+                        <li>
+                            <storng>
+                                Water Level: <%= feed["field1"] %>
+                            </storng>
+                        </li>
+                        <% }) %>
+                </ul>
+            </div>
+        </header>
+        <div class="row text-center" style="display: flex; flex-wrap: wrap;">
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail roundAndShadow">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
