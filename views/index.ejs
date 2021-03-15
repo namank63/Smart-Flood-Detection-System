@@ -12,20 +12,50 @@
 
 <body>
     <div class="container">
-        <header class="jumbotron">
+        <header class="jumbotron bg-dark">
             <div class="container">
-                <h1>Smart Flood Detection System</h1>
-                <p>TO be added...</p>
-                <p><a class="btn btn-primary btn-lg" href="/adminLogin">Admin Login</a></p>
-                <ul>
-                    <% data["feeds"].forEach(function(feed){%>
-                        <li>
-                            <storng>
-                                Water Level: <%= feed["field1"] %>
-                            </storng>
-                        </li>
-                        <% }) %>
-                </ul>
+                <div class="d-flex justify-content-between">
+                    <h1 class="text-white" style="margin-bottom: 40px;">Smart Flood Detection System</h1>
+                    <a id="adminButton" class="btn btn-info" href="/adminLogin" role="button">Admin Login</a>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                            <div class="card-header">Ultrasonic Senser</div>
+                            <div class="card-body">
+                                <p class="card-text waterLevel">
+                                    <storng>
+                                        <%= ultrasonicSensorReading %>
+                                    </storng>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                            <div class="card-header">Water Sensor</div>
+                            <div class="card-body">
+                                <p class="card-text waterLevel">
+                                    <storng>
+                                        <%= walterSensorReading %>
+                                    </storng>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white <%= colorLevel %> mb-3" style="max-width: 18rem;">
+                            <div class="card-header">Flood Status</div>
+                            <div class="card-body">
+                                <p class="card-text waterLevel">
+                                    <storng>
+                                        <%= floodStatus %>
+                                    </storng>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
         <div class="row text-center" style="display: flex; flex-wrap: wrap;">
