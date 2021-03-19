@@ -1,20 +1,37 @@
-var express = require("express");
-var app = express();
-var request = require("request");
+/**********************************************
+CONSTANT VARIABLE DECLARATION
+**********************************************/
+const express   = require("express");
+const app       = express();
+const request   = require("request");
 
+
+/**********************************************
+CONFIGURATION
+**********************************************/
+require('dotenv').config();
+
+
+/**********************************************
+SEEDING
+**********************************************/
+
+//Variables
 var ultrasonic = 100;
-var water = 100;
-var interval = 16 * 1000; //16 seconds
+var water      = 100;
+var interval   = 16 * 1000; //set for 16 second rotation
+
+
+//Function
 for (var i = 0; i < 10; i++) {
     setTimeout(function (i) {
-        url = "https://api.thingspeak.com/update?api_key=PIHD73ES1100H0N3&field1=" + ultrasonic + "&field2=" + water;
+        url = process.env.SEED_THINGSPEAK_API + ultrasonic + "&field2=" + water;
         request(url, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 var data = JSON.parse(body)
                 ultrasonic = Math.floor(Math.random() * 100) + 1;
                 if (ultrasonic <= 30) {
                     water = Math.floor(Math.random() * (100 - 70) + 70);
-                    // water = Math.floor(Math.random() * 100) + 1;
                 } else {
                     water = 0;
                 }
@@ -25,6 +42,7 @@ for (var i = 0; i < 10; i++) {
     }, interval * i, i);
 }
 
+//Server
 app.listen(4000, function () {
     console.log("Seeding Started!!");
 });
