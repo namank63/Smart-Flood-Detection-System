@@ -12,11 +12,60 @@
 
 <body>
     <div class="container">
+        <!-- Flood Status Section -->
         <header class="jumbotron bg-dark">
             <div class="container">
                 <div class="d-flex justify-content-between">
                     <h1 class="text-white" style="margin-bottom: 40px;">Smart Flood Detection System</h1>
-                    <a id="adminButton" class="btn btn-info" href="/adminLogin" role="button">Admin Login</a>
+                    <a id="adminButton" class="btn btn-info" href="/login" role="button">Admin Login</a>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                            <div class="card-header">Ultrasonic Senser</div>
+                            <div class="card-body">
+                                <p class="card-text waterLevel">
+                                    <storng>
+                                        <%= ultrasonicSensorReading %>
+                                    </storng>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                            <div class="card-header">Water Sensor</div>
+                            <div class="card-body">
+                                <p class="card-text waterLevel">
+                                    <storng>
+                                        <%= walterSensorReading %>
+                                    </storng>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white <%= colorLevel %> mb-3" style="max-width: 18rem;">
+                            <div class="card-header">Flood Status</div>
+                            <div class="card-body">
+                                <p class="card-text waterLevel">
+                                    <storng>
+                                        <%= floodStatus %>
+                                    </storng>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Flood News and Instructions -->
+        <header class="jumbotron bg-dark">
+            <div class="container">
+                <div class="d-flex justify-content-between">
+                    <h1 class="text-white" style="margin-bottom: 40px;">Smart Flood Detection System</h1>
+                    <a id="adminButton" class="btn btn-info" href="/login" role="button">Admin Login</a>
                 </div>
                 <div class="row">
                     <div class="col-md-4">

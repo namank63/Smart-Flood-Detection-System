@@ -1,23 +1,40 @@
 /**********************************************
 CONSTANT VARIABLE DECLARATION
 **********************************************/
-const express     = require("express");
-const app         = express();
-const request     = require("request");
-const fast2sms    = require('fast-two-sms');
+const express = require("express"),
+    app = express(),
+    request = require("request"),
+    fast2sms = require('fast-two-sms'),
+    mongoose = require("mongoose"),
+    methodOverride = require('method-override'),
+    expressSanitizer = require("express-sanitizer"),
+    bodyParser = require("body-parser");
 
 
 /**********************************************
 CONFIGURATION
 **********************************************/
-require('dotenv').config();
+//App Configuration
 app.use(express.static(__dirname + "/public"));
+app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
+app.use(expressSanitizer());
+require('dotenv').config();
+
+//DataBase Configuration
+const connectDB = require("./database/Connection");
+User = require("./models/user");
+Admin = require("./models/admin");
+
+
+
+
 
 
 /**********************************************
 ROUTES
 **********************************************/
-
 //landing page
 app.get('/', (req, res) => {
     var query = req.query.search;
@@ -45,18 +62,23 @@ app.get('/', (req, res) => {
                 // });
                 // console.log(sms);
             }
-            res.render("index.ejs", { 
-                ultrasonicSensorReading: ultrasonicSensorReading, 
-                walterSensorReading: walterSensorReading, 
-                colorLevel: colorLevel, floodStatus: floodStatus 
+            res.render("index.ejs", {
+                ultrasonicSensorReading: ultrasonicSensorReading,
+                walterSensorReading: walterSensorReading,
+                colorLevel: colorLevel, floodStatus: floodStatus
             });
         }
     });
 });
 
 //Admin Login Page
-app.get('/adminLogin', (req, res) => {
-    res.render("adminLogin.ejs");
+app.get('/login', (req, res) => {
+    res.render("login.ejs");
+});
+
+//Admin Page
+app.get('/admin', (req, res) => {
+    res.render("admin.ejs");
 });
 
 //Server
