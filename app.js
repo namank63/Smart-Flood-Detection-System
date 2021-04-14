@@ -12,7 +12,7 @@ const express = require("express"),
 
 
 /**********************************************
-CONFIGURATION
+APP CONFIGURATION
 **********************************************/
 //App Configuration
 app.use(express.static(__dirname + "/public"));
@@ -22,13 +22,20 @@ app.use(methodOverride('_method'));
 app.use(expressSanitizer());
 require('dotenv').config();
 
-//DataBase Configuration
-const connectDB = require("./database/Connection");
+/**********************************************
+DATABASE CONFIGURATION
+**********************************************/
+mongoose.connect(process.env.DATABASE_API, { useUnifiedTopology: true, useNewUrlParser: true }, function (err, db) {
+    if (err) {
+        console.log("DataBase connection Error");
+    } else {
+        console.log("DataBase connected Sucessfully");
+    }
+});
+
 User = require("./models/user");
 Admin = require("./models/admin");
-
-
-
+Blog = require("./models/admin");
 
 
 
