@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
     <title>IOT Project</title>
 </head>
 
@@ -60,60 +61,41 @@
             </div>
         </header>
 
-        <!-- Flood News and Instructions -->
+        <!-- Blogs Section -->
         <header class="jumbotron bg-dark">
-            <div class="container">
-                <div class="d-flex justify-content-between">
-                    <h1 class="text-white" style="margin-bottom: 40px;">Smart Flood Detection System</h1>
-                    <a id="adminButton" class="btn btn-info" href="/login" role="button">Admin Login</a>
+            <div class="ui top attached segment">
+                <div class="ui divided items">
+                    <% blogs.forEach(function(blog){ %>
+                        <div class="ui header">
+                            <%= blog.title %>
+                        </div>
+                        <div class="item">
+                            <div class="image">
+                                <img src="<%= blog.image %>">
+                            </div>
+                            <div class="content">
+                                <a class="header" href="/blogs/<%= blog._id %>"></a>
+                                <div class="meta">
+                                    <span>
+                                        <%= blog.created.toDateString() %>
+                                    </span>
+                                </div>
+                                <div class="description">
+                                    <p>
+                                        <%- blog.body.substring(0, 100) %>...
+                                    </p>
+                                </div>
+                                <div class="extra">
+                                    <a class="ui floated basic violet button" href="/<%= blog._id %>">
+                                        Read More
+                                        <i class="right chevron icon"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-                            <div class="card-header">Ultrasonic Senser</div>
-                            <div class="card-body">
-                                <p class="card-text waterLevel">
-                                    <storng>
-                                        <%= ultrasonicSensorReading %>
-                                    </storng>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-                            <div class="card-header">Water Sensor</div>
-                            <div class="card-body">
-                                <p class="card-text waterLevel">
-                                    <storng>
-                                        <%= walterSensorReading %>
-                                    </storng>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card text-white <%= colorLevel %> mb-3" style="max-width: 18rem;">
-                            <div class="card-header">Flood Status</div>
-                            <div class="card-body">
-                                <p class="card-text waterLevel">
-                                    <storng>
-                                        <%= floodStatus %>
-                                    </storng>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </header>
-        <div class="row text-center" style="display: flex; flex-wrap: wrap;">
-            <div class="col-md-3 col-sm-6">
-                <div class="thumbnail roundAndShadow">
-
-                </div>
-            </div>
-        </div>
     </div>
 </body>
 

@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    <title>Blog App</title>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
+</head>
+
+<body>
+    <div class="ui main text container segment" style="margin-top: 50px;">
+        <div class="ui huge header">
+            <%= blog.title %>
+        </div>
+        <div class="ui top attached">
+            <div class="item">
+                <img class="ui centered rounded image" src="<%= blog.image %>">
+                <div class="content">
+                    <span>
+                        <%= blog.created.toDateString() %>
+                    </span>
+                </div>
+                <div class="description">
+                    <p>
+                        <%= blog.body %>
+                    </p>
+                    <!-- To allow script replace = with - -->
+                </div>
+                <a class="ui orange basic button" href="/<%= blog._id %>/edit">Edit</a>
+                <form id="delete" action="/<%= blog._id %>?_method=DELETE" method="POST">
+                    <button class="ui red basic button">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
