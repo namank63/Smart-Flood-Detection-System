@@ -33,8 +33,21 @@ mongoose.connect(process.env.DATABASE_API, { useUnifiedTopology: true, useNewUrl
     }
 });
 
-User = require("./models/user");
-Admin = require("./models/admin");
+var blogSchema = new mongoose.Schema({
+    title: String,
+    image: String,
+    body: String,
+    created: { type: Date, default: Date.now }
+});
+var Blog = mongoose.model("Blog", blogSchema);
+
+var userSchema = new mongoose.Schema({
+    name: String,
+    location: String,
+    mobile: String,
+    added: { type: Date, default: Date.now }
+});
+var User = mongoose.model("User", userSchema);
 
 
 
@@ -91,28 +104,26 @@ app.get('/login', (req, res) => {
     res.render("login.ejs");
 });
 
-app.get("/admin", function (req, res) {
-    Blog.find({}, function (err, blogs) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("admin.ejs", { blogs: blogs });
-        }
-    });
+app.post("/admin", function (req, res) {
+    var id = req.body.id;
+    var password = req.body.password;
+    if (id == "admin" && password == "admin") {
+        Blog.find({}, function (err, blogs) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("admin.ejs", { blogs: blogs });
+            }
+        });
+    } else {
+        res.render("login.ejs");
+    }
 });
 
 
 /**********************************************
 BLOG ROUTES
 **********************************************/
-var blogSchema = new mongoose.Schema({
-    title: String,
-    image: String,
-    body: String,
-    created: { type: Date, default: Date.now }
-});
-var Blog = mongoose.model("Blog", blogSchema);
-
 //New Route
 app.get("/new", function (req, res) {
     res.render("new");
