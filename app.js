@@ -22,6 +22,7 @@ app.use(methodOverride('_method'));
 app.use(expressSanitizer());
 require('dotenv').config();
 
+
 /**********************************************
 DATABASE CONFIGURATION
 **********************************************/
@@ -42,7 +43,7 @@ var blogSchema = new mongoose.Schema({
 var Blog = mongoose.model("Blog", blogSchema);
 
 var userSchema = new mongoose.Schema({
-    name: String,
+    username: String,
     location: String,
     mobile: String,
     added: { type: Date, default: Date.now }
@@ -50,52 +51,70 @@ var userSchema = new mongoose.Schema({
 var User = mongoose.model("User", userSchema);
 
 
-
 /**********************************************
 APP ROUTES
 **********************************************/
 //landing page
+var msgAllow = true;
 app.get('/', (req, res) => {
     var blogs;
+    var users;
     Blog.find({}, function (err, allBlogs) {
         if (err) {
             console.log(err);
         } else {
             blogs = allBlogs;
         }
-    });
-    var query = req.query.search;
-    request(process.env.RETRIVE_THINGSPEAK_API, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            var data = JSON.parse(body)
-            let ultrasonicSensorReading = Number(data.feeds[0].field1);
-            let walterSensorReading = Number(data.feeds[0].field2);
-            let colorLevel;
-            let floodStatus;
-            if (ultrasonicSensorReading >= 61) {
-                colorLevel = 'bg-success';
-                floodStatus = 'Normal';
-            } else if (ultrasonicSensorReading >= 31 && ultrasonicSensorReading <= 60) {
-                colorLevel = 'bg-warning';
-                floodStatus = 'Medium';
-            } else if (ultrasonicSensorReading <= 30 && walterSensorReading >= 70) {
-                const warningMessage = "Emergency Alert: Your area is prone to flood as estimated by our Smart Flood Detection System. Read more block on the website!!";
-                colorLevel = 'bg-danger';
-                floodStatus = 'Danger';
-                // const sms = fast2sms.sendMessage({
-                //     authorization: process.env.SMS_API_KEY, 
-                //     message: warningMessage, 
-                //     numbers: ["8604848731"]
-                // });
-                // console.log(sms);
+        var numbers = new Set();
+        User.find({}, function (err, allUsers) {
+            var numbers = new Set();
+            if (err) {
+                console.log(err);
+            } else {
+                allUsers.forEach(function (user) {
+                    numbers.add(Number(user.mobile));
+                });
+                let phone_no = [];
+                numbers.forEach(function (number) {
+                    phone_no.push(number);
+                });
+                request(process.env.RETRIVE_THINGSPEAK_API, function (error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                        var data = JSON.parse(body)
+                        let ultrasonicSensorReading = Number(data.feeds[0].field1);
+                        let walterSensorReading = Number(data.feeds[0].field2);
+                        let colorLevel;
+                        let floodStatus;
+                        if (ultrasonicSensorReading >= 61) {
+                            colorLevel = 'bg-success';
+                            floodStatus = 'Normal';
+                        } else if (ultrasonicSensorReading >= 31 && ultrasonicSensorReading <= 60) {
+                            colorLevel = 'bg-warning';
+                            floodStatus = 'Medium';
+                        } else if (ultrasonicSensorReading <= 30 && walterSensorReading >= 70) {
+                            const warningMessage = "Emergency Alert: Your area is prone to flood as estimated by our Smart Flood Detection System. Read more block on the website!!";
+                            colorLevel = 'bg-danger';
+                            floodStatus = 'Danger';
+                            if (msgAllow == true) {
+                                // const sms = fast2sms.sendMessage({
+                                //     authorization: process.env.SMS_API_KEY, 
+                                //     message: warningMessage, 
+                                //     numbers: phone_no
+                                // });
+                                msgAllow = false;
+                            }
+                        }
+                        res.render("index.ejs", {
+                            ultrasonicSensorReading: ultrasonicSensorReading,
+                            walterSensorReading: walterSensorReading,
+                            colorLevel: colorLevel,
+                            floodStatus: floodStatus,
+                            blogs: blogs
+                        });
+                    }
+                });
             }
-            res.render("index.ejs", {
-                ultrasonicSensorReading: ultrasonicSensorReading,
-                walterSensorReading: walterSensorReading,
-                colorLevel: colorLevel, floodStatus: floodStatus,
-                blogs: blogs
-            });
-        }
+        });
     });
 });
 
@@ -118,6 +137,29 @@ app.post("/admin", function (req, res) {
     } else {
         res.render("login.ejs");
     }
+});
+
+
+/**********************************************
+USER ROUTES
+**********************************************/
+//New Route
+app.get("/newuser", function (req, res) {
+    res.render("newuser");
+});
+
+//Create Route
+app.post("/newuser", function (req, res) {
+    //create blog
+    req.body.user.body = req.sanitize(req.body.user.body);
+    User.create(req.body.user, function (err, newUser) {
+        if (err) {
+            res.render("new");
+        } else {
+            //then, redirect to the index
+            res.redirect("/admin");
+        }
+    });
 });
 
 
@@ -165,7 +207,6 @@ app.get("/:id/edit", function (req, res) {
     });
 });
 
-
 //Update Route
 app.put("/:id", function (req, res) {
     req.body.blog.body = req.sanitize(req.body.blog.body);
@@ -191,7 +232,10 @@ app.delete("/:id", function (req, res) {
     //redirect somewhere
 });
 
-//Server
+
+/**********************************************
+SERVER
+**********************************************/
 app.listen(3000, () => {
     console.log("Server is Started!!");
 });
