@@ -4,17 +4,25 @@
         <form class="ui form" action="/newuser" method="post">
             <div class="field">
                 <label>Username</label>
-                <input type="text" name="user[username]" placeholder="Username">
+                <input type="text" name="user[username]" placeholder="Username" required>
             </div>
             <div class="field">
                 <label>Location</label>
-                <input type="text" name="user[location]" placeholder="Location">
+                <input type="text" name="user[location]" placeholder="Location" required>
             </div>
             <div class="field">
-                <label>Mobile</label>
-                <input type="text" name="user[mobile]" placeholder="Mobile No.">
+                <label>Mobile (10 digit)</label>
+                <input type="text" name="user[mobile]" placeholder="Mobile No." pattern="[789][0-9]{9}" required>
             </div>
             <input class="ui violet big basic button" type="submit">
+        </form>
+        <div class="ui huge header">Delete User</div>
+        <form class="ui form" action="/delete" method="post">
+            <div class="field">
+                <label>Mobile (10 digit)</label>
+                <input type="text" name="mobile" placeholder="Mobile" pattern="[789][0-9]{9}" required>
+            </div>
+            <input class="ui red big basic button" type="submit">
         </form>
     </div>
     <%- include('partials/footer') %>

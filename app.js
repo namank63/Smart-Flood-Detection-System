@@ -139,6 +139,16 @@ app.post("/admin", function (req, res) {
     }
 });
 
+app.get("/adnim", function (req, res) {
+    Blog.find({}, function (err, blogs) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("admin.ejs", { blogs: blogs });
+        }
+    });
+});
+
 
 /**********************************************
 USER ROUTES
@@ -156,11 +166,20 @@ app.post("/newuser", function (req, res) {
         if (err) {
             res.render("new");
         } else {
-            //then, redirect to the index
-            res.redirect("/admin");
+            res.redirect("/adnim");
         }
     });
 });
+
+//Delete Route
+app.post("/delete", function (req, res) {
+    User.deleteOne({ mobile: req.body.mobile }).then(function () {
+        console.log("User deleted");
+        res.redirect("/newuser");
+    }).catch(function (error) {
+        console.log(error);
+    });
+})
 
 
 /**********************************************
@@ -179,8 +198,7 @@ app.post("/", function (req, res) {
         if (err) {
             res.render("new");
         } else {
-            //then, redirect to the index
-            res.redirect("/admin");
+            res.redirect("/adnim");
         }
     });
 });
@@ -192,6 +210,17 @@ app.get("/:id", function (req, res) {
             res.redirect("/");
         } else {
             res.render("show", { blog: foundBlog });
+        }
+    });
+});
+
+//Show Route
+app.get("/showAdmin/:id", function (req, res) {
+    Blog.findById(req.params.id, function (err, foundBlog) {
+        if (err) {
+            res.redirect("/");
+        } else {
+            res.render("showAdmin", { blog: foundBlog });
         }
     });
 });

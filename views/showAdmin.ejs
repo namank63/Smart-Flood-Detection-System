@@ -1,13 +1,4 @@
-<html>
-
-<head>
-    <title>Flood Blog</title>
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
-</head>
-
-<body>
+<%- include('partials/header') %>
     <div class="ui main text container segment" style="margin-top: 50px;">
         <div class="ui huge header">
             <%= blog.title %>
@@ -27,7 +18,10 @@
                     <!-- To allow script replace = with - -->
                 </div>
                 <br>
-                <a class="ui orange basic button" href="/">Back</a>
+                <a class="ui orange basic button" href="/<%= blog._id %>/edit">Edit</a>
+                <form id="delete" action="/<%= blog._id %>?_method=DELETE" method="POST">
+                    <button class="ui red basic button">Delete</button>
+                </form>
             </div>
         </div>
     </div>
