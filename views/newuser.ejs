@@ -25,4 +25,31 @@
             <input class="ui red big basic button" type="submit">
         </form>
     </div>
+    <div class="ui main text container">
+        <div class="ui top attached segment">
+            <div class="ui huge header">All User</div>
+            <div class="ui divided items">
+                <% users.forEach(function(user){ %>
+                    <div class="ui header">
+                        <%= user.username %>
+                    </div>
+                    <div class="item">
+                        <div class="ui content">
+                            <p><strong>Mobile No</strong></p>
+                            <%= user.mobile %>
+                        </div>
+                        <div class="content">
+                            <div class="description">
+                                <p>
+                                <p><strong>Location</strong></p>
+                                <%- user.location %>
+                                    </p>  
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <% }); %>
+            </div>
+        </div>
+    </div>
     <%- include('partials/footer') %>

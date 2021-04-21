@@ -155,8 +155,18 @@ USER ROUTES
 **********************************************/
 //New Route
 app.get("/newuser", function (req, res) {
-    res.render("newuser");
+    User.find({}, function (err, users) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("newuser", { users: users });
+        }
+    });
 });
+
+// app.get("/newuser", function (req, res) {
+//     res.render("newuser");
+// });
 
 //Create Route
 app.post("/newuser", function (req, res) {
