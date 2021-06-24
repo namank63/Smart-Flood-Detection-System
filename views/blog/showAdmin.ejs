@@ -1,4 +1,4 @@
-<%- include('partials/header') %>
+<%- include('../partials/header') %>
     <div class="ui main text container segment" style="margin-top: 50px;">
         <div class="ui huge header">
             <%= blog.title %>
@@ -9,6 +9,7 @@
                 <div class="content">
                     <span>
                         <%= blog.created.toDateString() %>
+                        <i>-by <%=blog.department%> </i>
                     </span>
                 </div>
                 <div class="description">
@@ -18,12 +19,16 @@
                     <!-- To allow script replace = with - -->
                 </div>
                 <br>
-                <a class="ui orange basic button" href="/<%= blog._id %>/edit">Edit</a>
+                
                 <form id="delete" action="/<%= blog._id %>?_method=DELETE" method="POST">
-                    <button class="ui red basic button">Delete</button>
+                    <% if(currentUser.department === blog.department) { %> 
+                        <a class="ui orange basic button" href="/<%= blog._id %>/edit">Edit</a>
+                        <button class="ui red basic button">Delete</button>
+                    <% } %>
+                    <a class="ui blue basic button" href="/admin">Back</a>
                 </form>
             </div>
         </div>
     </div>
 
-    <%- include('partials/footer') %>
+    <%- include('../partials/footer') %>

@@ -18,6 +18,7 @@
                 <div class="content">
                     <span>
                         <%= blog.created.toDateString() %>
+                        <i>-by <%=blog.department%> </i>
                     </span>
                 </div>
                 <div class="description">
@@ -28,8 +29,9 @@
                 </div>
                 <br>
                 <a class="ui orange basic button" href="/">Back</a>
+                <a class="ui green basic button" href="#">Donate</a>
             </div>
         </div>
     </div>
 
-    <%- include('partials/footer') %>
+    <%- include('../partials/footer') %>

@@ -1,11 +1,11 @@
-<%- include('partials/header') %>
+<%- include('../partials/header') %>
     <div class="ui main text container" style="margin-top: 50px;">
         <div class="ui top attached segment">
             <div class="ui huge header">All Blogs</div>
             <div class="ui divided items">
                 <% blogs.slice().reverse().forEach(function(blog){ %>
                     <div class="ui header">
-                        <%= blog.title %>
+                        <%= blog.title %> -by <%= blog.department %>
                     </div>
                     <div class="item">
                         <div class="image">
@@ -20,7 +20,9 @@
                             </div>
                             <div class="description">
                                 <p>
-                                    <%- blog.body.substring(0, 100) %>...
+                                    <% if(blog.body) {%>
+                                        <%- blog.body.substring(0, 100) %>...
+                                    <% } %>
                                 </p>
                             </div>
                             <div class="extra">

@@ -88,8 +88,10 @@
                                     </span>
                                 </div>
                                 <div class="description">
-                                    <p>
-                                        <%- blog.body.substring(0, 100) %>...
+                                    <p> 
+                                        <% if(blog.body) {%>
+                                            <%- blog.body.substring(0, 100) %>...
+                                        <% } %>
                                     </p>
                                 </div>
                                 <div class="extra">

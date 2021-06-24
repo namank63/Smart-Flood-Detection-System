@@ -9,7 +9,7 @@ const { isLoggedIn } = require("../middleware");
 //New Route
 router.get("/newuser", isLoggedIn, async (req, res) => {
     const users = await User.find({});
-    res.render("newuser", { users });
+    res.render("user/newuser", { users });
 });
 
 //Create Route
@@ -28,7 +28,6 @@ router.post("/newuser", isLoggedIn, function (req, res) {
 //Delete Route
 router.post("/delete", isLoggedIn, function (req, res) {
     User.deleteOne({ mobile: req.body.mobile }).then(function () {
-        console.log("User deleted");
         res.redirect("/newuser");
     }).catch(function (error) {
         console.log(error);

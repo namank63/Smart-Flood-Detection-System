@@ -9,15 +9,12 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', catchAsync(async (req, res, next) => {
-    console.log("Hit Register");
     try {
         const {username, department, mobile, email, password} = req.body;
         const admin = new Admin({username, department, mobile, email});
-        console.log(admin);
         const registeredAdmin = await Admin.register(admin, password);
         const newAdmin = await registeredAdmin.save();
         const id = registeredAdmin._id;
-        console.log(id);
         req.login(registeredAdmin, err => {
             if (err) return send("Login Failed!!");
             res.redirect('/login');

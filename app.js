@@ -15,6 +15,7 @@ const DataBaseConnect = require("./database/connection");
 const passportLocalMongoose = require('passport-local-mongoose');
 
 
+
 /**********************************************
 ROUTERS
 **********************************************/
@@ -70,8 +71,12 @@ app.get('/', async (req, res) => {
     let numbers = new Set();
     const blogs = await Blog.find({});
     const users = await User.find({});
+    const admins = await Admin.find({});
     users.forEach(function (user) {
         numbers.add(Number(user.mobile));
+    });
+    admins.forEach(function (admin) {
+        numbers.add(Number(admin.mobile));
     });            
     let phone_no = [];
     numbers.forEach(function (number) {
@@ -94,15 +99,17 @@ app.get('/', async (req, res) => {
                 const warningMessage = "Emergency Alert: Your area is prone to flood as estimated by our Smart Flood Detection System. Read more block on the website!!";
                 colorLevel = 'bg-danger';
                 floodStatus = 'Danger';
-                // if (nextDate <= Date.now()) {
-                //     const sms = fast2sms.sendMessage({
-                //         authorization: process.env.SMS_API_KEY, 
-                //         message: warningMessage, 
-                //         numbers: phone_no
-                //     });
-                //     console.log(`Message sent successfully to ${numbers.size} users!!`)
-                //     nextDate = Date.now() + 259200000;
-                // }
+                if (nextDate <= Date.now()) {
+                    // const sms = fast2sms.sendMessage({
+                    //     authorization: process.env.SMS_API_KEY, 
+                    //     message: warningMessage, 
+                    //     numbers: phone_no
+                    // });
+                    // console.log(`Message sent successfully to ${numbers.size} users!!`)
+                    // nextDate = Date.now() + 259200000;
+
+
+                }
             }
             res.render("index", {
                 ultrasonicSensorReading: ultrasonicSensorReading,
@@ -118,7 +125,7 @@ app.get('/', async (req, res) => {
 //Admin Login Page
 app.get("/admin", isLoggedIn, async (req, res)=> {
     const blogs = await Blog.find({});
-    res.render("admin", { blogs });
+    res.render("admin/admin", { blogs });
 });
 
 app.use('/', adminRouter);

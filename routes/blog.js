@@ -18,11 +18,11 @@ delete: /:id
 
 //New Route
 router.get("/new", isLoggedIn, function (req, res) {
-    res.render("new");
+    res.render("blog/new");
 });
 
 //Create Route
-router.post("/", function (req, res) {
+router.post("/", isLoggedIn, function (req, res) {
     req.body.blog.body = req.sanitize(req.body.blog.body);
     Blog.create(req.body.blog, function (err, newBlog) {
         if (err) {
@@ -39,39 +39,39 @@ router.get("/:id", function (req, res) {
         if (err) {
             res.redirect("/");
         } else {
-            res.render("show", { blog: foundBlog });
+            res.render("blog/show", { blog: foundBlog });
         }
     });
 });
 
 //Show Route
-router.get("/showAdmin/:id", function (req, res) {
+router.get("/showAdmin/:id", isLoggedIn, function (req, res) {
     Blog.findById(req.params.id, function (err, foundBlog) {
         if (err) {
             res.redirect("/");
         } else {
-            res.render("showAdmin", { blog: foundBlog });
+            res.render("blog/showAdmin", { blog: foundBlog });
         }
     });
 });
 
 //Edt Route
-router.get("/:id/edit", function (req, res) {
+router.get("/:id/edit", isLoggedIn, function (req, res) {
     Blog.findById(req.params.id, function (err, foundBlog) {
         if (err) {
             res.redirect("/");
         } else {
-            res.render("edit", { blog: foundBlog });
+            res.render("blog/edit", { blog: foundBlog });
         }
     });
 });
 
 //Update Route
-router.put("/:id", function (req, res) {
+router.put("/:id", isLoggedIn, function (req, res) {
     req.body.blog.body = req.sanitize(req.body.blog.body);
     Blog.findByIdAndUpdate(req.params.id, req.body.blog, function (err, updatedBlog) {
         if (err) {
-            res.redirect("/");
+            res.redirect("/admin");
         } else {
             res.redirect("/" + req.params.id);
         }
@@ -79,13 +79,13 @@ router.put("/:id", function (req, res) {
 });
 
 //Delete Route
-router.delete("/:id", function (req, res) {
+router.delete("/:id", isLoggedIn, function (req, res) {
     //destroy blog
     Blog.findByIdAndRemove(req.params.id, function (err) {
         if (err) {
-            res.redirect("/");
+            res.redirect("/admin");
         } else {
-            res.redirect("/");
+            res.redirect("/admin");
         }
     });
     //redirect somewhere

@@ -19,8 +19,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ml-auto">
-                    <% if(currentUser) { console.log(currentUser); %>
-                        <a class="nav-link" href="#" class="item"> Welcome <%=currentUser.username%> (<%=currentUser.department%>)</a>
+                    <% if(currentUser) { %>
+                        <a class="nav-link" href="/admin" class="item"> Welcome <%=currentUser.username%> (<%=currentUser.department%>)</a>
                         <a class="nav-link" href="/new" class="item">New Blog</a>
                         <a class="nav-link" href="/newuser" class="item">Manage User</a>
                     <% } %>
