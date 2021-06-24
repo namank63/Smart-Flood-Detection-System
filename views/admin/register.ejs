@@ -1,0 +1,60 @@
+<%- include('../partials/header') %>
+
+    <div class="container mt-5 col-6 offset-3">
+        <h1 class="text-white">Register</h1>
+    <form action="/register" method="POST" class="validated-form" novalidate>
+        <div class="mb-3">
+            <label class="form-label text-white" for="username">Username</label>
+            <input class="form-control" type="text" id="username" name="username" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-white" for="password">Password</label>
+            <input class="form-control" type="password" id="password" name="password" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-white" for="mobile">Mobile</label>
+            <input class="form-control" type="number" id="mobile" name="mobile" pattern="[789][0-9]{9}" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-white" for="email">Email</label>
+            <input class="form-control" type="email" id="email" name="email" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-white" for="department">Department</label>
+            <select name="department" id="department" class="form-select" aria-label="Default select example">
+                <option value="District Collectorate">District Collectorate</option>
+                <option value="Municipal Corporation">Municipal Corporation</option>
+                <option value="Health Department">Health Department</option>
+                <option value="Municipal Sanitation Department">Municipal Sanitation Department</option>
+                <option value="Urban Development Authority">Urban Development Authority</option>
+                <option value="Fire Brigade">Fire Brigade</option>
+                <option value="Police Commissionerate">Police Commissionerate</option>
+                <option value="Traffic Police">Traffic Police</option>
+                <option value="Civil Defense and Home Guards">Civil Defense and Home Guards</option>
+                <option value="Indian Meteorological Department">Indian Meteorological Department</option>
+                <option value="Public Works Department">Public Works Department</option>
+                <option value="Power Supply Department">Power Supply Department</option>
+                <option value="Railways">Railways</option>
+                <option value="Telecommunication">Telecommunication</option>
+                <option value="Public Transport">Public Transport</option>
+                <option value="P.H.E Department">P.H.E Department</option>
+                <option value="Irrigation & Flood control Department">Irrigation & Flood control Department</option>
+                <option value="Food and Civil Supplies Department">Food and Civil Supplies Department</option>
+                <option value="NGOs/Others">NGOs/Others</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-white" for="key">Unique Department Key</label>
+            <input class="form-control" type="text" id="key" name="key" required>
+        </div>
+
+        <button class="btn btn-dark">Register</button>
+    </form>
+    </div>
+
+<%- include('../partials/footer') %>

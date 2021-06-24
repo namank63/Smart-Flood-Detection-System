@@ -3,7 +3,7 @@
         <div class="ui top attached segment">
             <div class="ui huge header">All Blogs</div>
             <div class="ui divided items">
-                <% blogs.forEach(function(blog){ %>
+                <% blogs.slice().reverse().forEach(function(blog){ %>
                     <div class="ui header">
                         <%= blog.title %>
                     </div>

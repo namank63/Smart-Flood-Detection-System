@@ -18,7 +18,14 @@
             <div class="container">
                 <div class="d-flex justify-content-between">
                     <h1 class="text-white" style="margin-bottom: 40px;">Smart Flood Detection System</h1>
-                    <a id="adminButton" class="btn btn-info" href="/login" role="button">Admin Login</a>
+                    <% if(!currentUser) { %>
+                        <a id="adminButton" class="btn btn-info" href="/login" role="button">Admin Login</a>
+                    <% } else {%>
+                        <div>
+                            <a id="adminButton" class="btn btn-info" href="/admin" role="button">Admin Panel</a>
+                            <a id="adminButton" class="btn btn-info" href="/logout" role="button">Logout</a>
+                        </div>
+                    <% } %>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
@@ -65,9 +72,9 @@
         <header class="jumbotron bg-dark">
             <div class="ui top attached segment">
                 <div class="ui divided items">
-                    <% blogs.forEach(function(blog){ %>
+                    <% blogs.slice().reverse().forEach(function(blog){ %>
                         <div class="ui header">
-                            <%= blog.title %>
+                            <%= blog.title %> -by <%= blog.department %>
                         </div>
                         <div class="item">
                             <div class="image">

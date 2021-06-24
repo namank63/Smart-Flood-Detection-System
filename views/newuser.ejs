@@ -1,5 +1,5 @@
 <%- include('partials/header') %>
-    <div class="ui main text container segment" style="margin-top: 70px;">
+    <div class="ui main text container segment mt-3">
         <div class="ui huge header">New User</div>
         <form class="ui form" action="/newuser" method="post">
             <div class="field">
@@ -12,7 +12,7 @@
             </div>
             <div class="field">
                 <label>Mobile (10 digit)</label>
-                <input type="text" name="user[mobile]" placeholder="Mobile No." pattern="[789][0-9]{9}" required>
+                <input type="number" name="user[mobile]" placeholder="Mobile No." pattern="[789][0-9]{9}" required>
             </div>
             <input class="ui violet big basic button" type="submit">
         </form>
@@ -20,16 +20,16 @@
         <form class="ui form" action="/delete" method="post">
             <div class="field">
                 <label>Mobile (10 digit)</label>
-                <input type="text" name="mobile" placeholder="Mobile" pattern="[789][0-9]{9}" required>
+                <input type="number" name="mobile" placeholder="Mobile" pattern="[789][0-9]{9}" required>
             </div>
             <input class="ui red big basic button" type="submit">
         </form>
     </div>
-    <div class="ui main text container">
+    <div class="ui main text container segment mb-3">
         <div class="ui top attached segment">
             <div class="ui huge header">All User</div>
             <div class="ui divided items">
-                <% users.forEach(function(user){ %>
+                <% users.slice().reverse().forEach(function(user){ %>
                     <div class="ui header">
                         <%= user.username %>
                     </div>
