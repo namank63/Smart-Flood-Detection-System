@@ -95,14 +95,14 @@ app.get('/', (req, res) => {
                             const warningMessage = "Emergency Alert: Your area is prone to flood as estimated by our Smart Flood Detection System. Read more block on the website!!";
                             colorLevel = 'bg-danger';
                             floodStatus = 'Danger';
-                            if (msgAllow == true) {
-                                // const sms = fast2sms.sendMessage({
-                                //     authorization: process.env.SMS_API_KEY, 
-                                //     message: warningMessage, 
-                                //     numbers: phone_no
-                                // });
-                                msgAllow = false;
-                            }
+                            // if (msgAllow == true) {
+                            //     const sms = fast2sms.sendMessage({
+                            //         authorization: process.env.SMS_API_KEY, 
+                            //         message: warningMessage, 
+                            //         numbers: phone_no
+                            //     });
+                            //     msgAllow = false;
+                            // }
                         }
                         res.render("index.ejs", {
                             ultrasonicSensorReading: ultrasonicSensorReading,
